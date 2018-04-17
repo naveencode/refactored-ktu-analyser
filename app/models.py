@@ -6,6 +6,7 @@ class Exam(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
     students = db.relationship("Student", backref="exam", lazy=True)
+    college_ranks = db.relationship("CollegeRank", backref="exam", lazy=True)
 
     def __repr__(self):
         return '<#id{} {}>\n'.format(self.id, self.name)
@@ -85,7 +86,7 @@ class College(db.Model):
     __tablename__ = "colleges"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
-
+    
     # def add_college(self, name):
     #     c = College(name=name)
     #     db.session.add(c)
