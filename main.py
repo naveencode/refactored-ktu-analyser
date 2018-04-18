@@ -10,3 +10,8 @@ def make_shell_context():
     return {'db': db, 'Exam': Exam, 'Student': Student, 'Result': Result,
             'Grade': Grade, 'College': College, 'Department': Department,
             'Course': Course, 'DepartmentRank': DepartmentRank, 'CollegeRank': CollegeRank}
+
+
+
+if __name__ == '__main__':
+    app.run()
