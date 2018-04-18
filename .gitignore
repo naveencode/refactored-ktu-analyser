@@ -2,3 +2,4 @@
 .vscode
 pylintrc
 vscode
+mydb.dump
