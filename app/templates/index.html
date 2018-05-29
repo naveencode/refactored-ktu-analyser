@@ -10,16 +10,25 @@
 
 
 <!-- </ul> -->
-<form action="#" method="GET">
-    <select id="my-select" name="exam">
-            {% for exam in exam_list %}
-                <option value="{{ exam.id }}">{{ exam.name }}</option>
-            {% endfor %}
-    </select>
-    <button id="exam-btn">Submit</button>
-</form>
+<div class="container" >
+    <form action="#" method="GET">
+            <select id="my-select" name="exam">
+        
+                    {% for exam in exam_list %}
+                        {% if exam.id == 1 %}
+                            <option selected="selected" value="{{ exam.id }}">{{ exam.name }}</option>
+                        {% else %}
+                            <option value="{{ exam.id }}">{{ exam.name }}</option>
+                        {% endif %}
+                    {% endfor %}
+            </select>
+    </form>
 
-</form>
+    <button id="exam-btn">Submit</button>
+
+</div>
+
+
 
 
 {% endblock %}

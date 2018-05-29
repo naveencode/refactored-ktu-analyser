@@ -1,4 +1,8 @@
 // window.alert("Helo")
+document.getElementById("exam-btn").addEventListener("click", function(){
+    var exam_id = document.getElementById('my-select').value
+    load_page(exam_id);
+});
 
 
 function load_page(exam_id, college_id = null, dept_id = null) {
@@ -69,11 +73,5 @@ function createTable(data) {
     }
     tbl.appendChild(tbdy);
     body.appendChild(tbl);
-
-
 }
 
-document.getElementById("exam-btn").addEventListener("click", function(){
-    var exam_id = document.getElementById('my-select').value
-    load_page(exam_id);
-});
