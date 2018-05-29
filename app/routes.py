@@ -9,7 +9,14 @@ from app.models import *
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    exam_list = []
+    for exam in Exam.query.all():
+        new_exam = {}
+        new_exam['id'] = exam.id
+        new_exam['name'] = exam.name
+        exam_list.append(new_exam)
+
+    return render_template('index.html', exam_list=exam_list)
 
 @app.route("/api/exams/<int:exam_id>", defaults={'college_id': None, 'department_id': None})
 @app.route("/api/exams/<int:exam_id>/colleges/<int:college_id>", defaults={'department_id': None})

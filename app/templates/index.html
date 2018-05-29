@@ -1,5 +1,25 @@
 {% extends "base.html" %} {% block content %}
 
-<h1>Index</h1>
+<!-- <h1>Index</h1>
+
+<ul>
+    <!-- {% for exam in exam_list %}
+        <li>{{ exam.id }}, {{ exam.name }}</li>
+    {% endfor %} -->
+
+
+
+<!-- </ul> -->
+<form action="#" method="GET">
+    <select id="my-select" name="exam">
+            {% for exam in exam_list %}
+                <option value="{{ exam.id }}">{{ exam.name }}</option>
+            {% endfor %}
+    </select>
+    <button id="exam-btn">Submit</button>
+</form>
+
+</form>
+
 
 {% endblock %}
