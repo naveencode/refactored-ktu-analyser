@@ -4,3 +4,4 @@ pylintrc
 vscode
 mydb.dump
 config.py
+.env
