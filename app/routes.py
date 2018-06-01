@@ -48,7 +48,7 @@ def index(exam_id, college_id, department_id):
 
                 table_details = {
                                 'caption': exam.name + " | " + college.name + " | " + department.name,
-                                'headers': ['Register No', 'SGPA']
+                                'headers': ['No.','Register No', 'SGPA']
                 }
                 
                 return render_template('index.html', page_depth=3, data=data, exam_details=exam_details, exam_list=exam_list, table_details=table_details)
@@ -64,7 +64,7 @@ def index(exam_id, college_id, department_id):
                                         })
                 table_details = {
                                 'caption': exam.name + " | " + college.name,
-                                'headers': ['Rank', 'Department Name', 'Pass Percentage']
+                                'headers': ['No.', 'Department Name', 'Pass Percentage']
                 }
                 return render_template('index.html', page_depth=2, data=data, exam_details=exam_details, exam_list=exam_list, table_details=table_details)
         else:
@@ -78,7 +78,7 @@ def index(exam_id, college_id, department_id):
                                 })
             table_details = {
                                 'caption': exam.name,
-                                'headers': ['Rank', 'College Name', 'Pass Percentage']
+                                'headers': ['No.', 'College Name', 'Pass Percentage']
                 }
             return render_template('index.html', page_depth=1, data=data, exam_details=exam_details, exam_list=exam_list, table_details=table_details)
 

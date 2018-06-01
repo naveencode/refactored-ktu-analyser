@@ -1,24 +1,26 @@
 {% extends "base.html" %}
 {% block content %}
-
-        <table>       
+        <table id="my-table" class="table table-responsive table-bordered table-hover" data-order="dec">       
                 <caption>{{ table_details['caption'] }}</caption>
 
                 <tr>
                 {% for header in table_details['headers'] %}
+                        {% if loop.index == 3 %}
+                        <th style="cursor: pointer;" onclick="sortTable();">{{ header }} <i class="fa fa-fw fa-sort"></i> </th>
+                        {% else %}
                         <th>{{ header }}</th>
+                        {% endif %}
                 {% endfor %}
                 </tr>
 
                 {% for row in data %}
                 <tr>
+                        <td align="center">{{ loop.index }}</td>
                         {% if page_depth == 3 %}
                         <td>{{ row.name }}</td>
                         {% elif page_depth == 2 %}
-                                <td align="center">{{ loop.index }}</td>
                                 <td><a href="/exams/{{ exam_details['exam_id'] }}/colleges/{{ exam_details['college_id'] }}/departments/{{ row.id }}">{{ row.name }}</a></td>
                         {% elif page_depth == 1 %}
-                                <td align="center">{{ loop.index }}</td>
                                 <td><a href="/exams/{{ exam_details['exam_id'] }}/colleges/{{ row.id }}">{{ row.name }}</a></td>
                         {% else %}
                                 <td>Error</td>
