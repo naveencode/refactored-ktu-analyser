@@ -48,9 +48,9 @@ def index(exam_id, college_id, department_id):
 
                 table_details = {
                                 'caption': exam.name + " | " + college.name + " | " + department.name,
-                                'headers': ['No.','Register No', 'SGPA']
+                                'headers': ['Rank','Register No', 'SGPA']
                 }
-                
+                data = sorted(data, key=lambda k: k['value'], reverse=True) 
                 return render_template('index.html', page_depth=3, data=data, exam_details=exam_details, exam_list=exam_list, table_details=table_details)
 
             else:
@@ -64,8 +64,10 @@ def index(exam_id, college_id, department_id):
                                         })
                 table_details = {
                                 'caption': exam.name + " | " + college.name,
-                                'headers': ['No.', 'Department Name', 'Pass Percentage']
+                                'headers': ['Rank', 'Department Name', 'Pass Percentage']
                 }
+                data = sorted(data, key=lambda k: k['value'], reverse=True) 
+                
                 return render_template('index.html', page_depth=2, data=data, exam_details=exam_details, exam_list=exam_list, table_details=table_details)
         else:
             exam_details = {'exam_name': exam.name, 'exam_id': exam.id}
@@ -78,8 +80,10 @@ def index(exam_id, college_id, department_id):
                                 })
             table_details = {
                                 'caption': exam.name,
-                                'headers': ['No.', 'College Name', 'Pass Percentage']
+                                'headers': ['Rank', 'College Name', 'Pass Percentage']
                 }
+            data = sorted(data, key=lambda k: k['value'], reverse=True) 
+                
             return render_template('index.html', page_depth=1, data=data, exam_details=exam_details, exam_list=exam_list, table_details=table_details)
 
             

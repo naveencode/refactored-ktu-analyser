@@ -6,7 +6,7 @@
                 <tr>
                 {% for header in table_details['headers'] %}
                         {% if loop.index == 3 %}
-                        <th style="cursor: pointer;" onclick="sortTable();">{{ header }} <i class="fa fa-fw fa-sort"></i> </th>
+                        <th>{{ header }}</th>
                         {% else %}
                         <th>{{ header }}</th>
                         {% endif %}
