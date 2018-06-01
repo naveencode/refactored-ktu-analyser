@@ -1,0 +1,29 @@
+{% extends "index.html" %} {% block rank %}
+
+
+
+    <table border=1 style="width: 100%">
+        
+            <caption>{{ exam_details['exam_name'] }}</caption>
+
+
+            <tr>
+                    <th>Rank</th>
+                    <th>College Name</th>
+                    <th>Pass Percentage</th>
+            </tr>
+
+            {% for row in pass_list %}
+                <tr>
+                    <td align="center">{{ loop.index }}</td>
+                    <td><a href="/exams/{{ exam_details['exam_id'] }}/colleges/{{ row.id }}">{{ row.name }}</a></td>
+                    <td align="center">{{ "%.2f"|format(row.pass_percent) }}</td>
+                </tr>
+            {% endfor %}
+
+
+        
+    </table>
+
+
+{% endblock %}

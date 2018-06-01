@@ -1,34 +1,29 @@
 {% extends "base.html" %} {% block content %}
 
-<!-- <h1>Index</h1>
 
-<ul>
-    <!-- {% for exam in exam_list %}
-        <li>{{ exam.id }}, {{ exam.name }}</li>
-    {% endfor %} -->
-
-
-
-<!-- </ul> -->
 <div class="container" >
-    <form action="#" method="GET">
-            <select id="my-select" name="exam">
-        
-                    {% for exam in exam_list %}
-                        {% if exam.id == 1 %}
-                            <option selected="selected" value="{{ exam.id }}">{{ exam.name }}</option>
-                        {% else %}
-                            <option value="{{ exam.id }}">{{ exam.name }}</option>
-                        {% endif %}
-                    {% endfor %}
-            </select>
-    </form>
+    <div class="exam-select">
+            <form action="/" method="POST" id="form1">
+                <select id="my-select" name="exam">
+            
+                        {% for exam in exam_list %}
+                                <option value="{{ exam.id }}">{{ exam.name }}</option>
+                        {% endfor %}
+                </select>
+                <button type="submit" form="form1" value="Submit">Submit</button>
+                
+            </form>
+    
 
-    <button id="exam-btn">Submit</button>
+    </div>
+   
+    <div>
+            {% block rank %}
+            {% endblock %}
+    
+    </div>
 
 </div>
-
-
 
 
 {% endblock %}

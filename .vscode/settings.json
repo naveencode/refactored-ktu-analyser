@@ -1,3 +1,4 @@
 {
-    "python.pythonPath": "/home/odin/.virtualenvs/miniproject/bin/python"
+    "python.pythonPath": "/home/odin/.local/share/virtualenvs/miniproject-_fp_NRAQ/bin/python",
+    "python.linting.enabled": false
 }

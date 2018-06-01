@@ -1,0 +1,31 @@
+
+
+{% extends "index.html" %} {% block rank %}
+
+
+
+<table border=1 style="width: 100%">
+
+    <caption>{{ exam_details['exam_name'] }} - {{ exam_details['college_name'] }} - {{ exam_details['department_name'] }}</caption>
+
+
+    <tr>
+        <!-- <th>No.</th> -->
+        <th>Register Number</th>
+        <th>SGPA</th>
+    </tr>
+
+
+    {% for row in sgpa_list %}
+        <tr>
+            <!-- <td align="center">{{ loop.index }}</td> -->
+            <td>{{ row.register_no }}</td>
+            <td align="center">{{ "%.2f"|format(row.sgpa) }}</td>
+        </tr>
+    {% endfor %}
+
+        
+</table>
+
+
+{% endblock %}
