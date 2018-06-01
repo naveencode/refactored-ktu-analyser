@@ -7,6 +7,8 @@ from app import app
 from app.models import *
 
 
+    # if exam is None:
+    #     return "<h1> Error : Invalid exam id </h1>", 422
 
 
 @app.route('/', methods=['POST', 'GET'], defaults={'exam_id': None, 'college_id': None, 'department_id': None})
@@ -16,75 +18,74 @@ from app.models import *
 def index(exam_id, college_id, department_id):
 
     exam_list = []
-
+    data = []
     for exam in Exam.query.all():
-        new_exam = {}
-        new_exam['id'] = exam.id
-        new_exam['name'] = exam.name
-        exam_list.append(new_exam)
+        exam_list.append({'id': exam.id, 'name': exam.name})
 
+    if(not exam_id and request.method == 'GET'):
+        return render_template('base.html', exam_list=exam_list)
+        
 
-
-    if request.method == 'POST':
-        exam_id = request.form.get('exam')
+    if request.method == 'POST' or exam_id:
+        if not exam_id:
+            exam_id = request.form.get('exam')
         exam = Exam.query.get(exam_id)
+        if college_id:
+            college = College.query.get(college_id)
+            if department_id:
+                department = Department.query.get(department_id);
+                exam_details = {'exam_name': exam.name, 'exam_id': exam.id, 'college_name': college.name, 'college_id': college.id,
+                                'department_name': department.name, 'department_id': department.id}
 
-        exam_details = {'exam_name': exam.name, 'exam_id': exam.id}
+                student_ranks = Student.query.filter(and_(Student.exam_id==exam_id,
+                                            Student.college_id==college_id,
+                                            Student.department_id==department_id)).all()
+                for student in student_ranks:
+                    data.append({
+                        'name': student.register_no,
+                        'value': student.sgpa
+                    })
 
-        if exam is None:
-            return "<h1> Error : Invalid exam id </h1>", 422
+                table_details = {
+                                'caption': exam.name + " | " + college.name + " | " + department.name,
+                                'headers': ['Register No', 'SGPA']
+                }
+                
+                return render_template('index.html', page_depth=3, data=data, exam_details=exam_details, exam_list=exam_list, table_details=table_details)
 
-        pass_list = []
-        college_ranks = exam.college_ranks
-
-        for clg in college_ranks:
-            pass_list.append({ 
-                               'name': College.query.get(clg.college_id).name,
-                               'pass_percent': clg.pass_percent,
-                               'id': clg.college_id
-                              })
-        return render_template('exam.html', pass_list=pass_list, exam_details=exam_details, exam_list=exam_list)
-                              
-
-    elif college_id and not department_id:
-
-        exam = Exam.query.get(exam_id)
-        college = College.query.get(college_id)
-        exam_details = {'exam_name': exam.name, 'exam_id': exam.id, 'college_name': college.name, 'college_id': college.id}
-
-        department_ranks = DepartmentRank.query.filter(and_(DepartmentRank.exam_id==exam_id, DepartmentRank.college_id==college_id)).all()
-        pass_list = []
-        for dept in department_ranks:
-            pass_list.append({ 
-                                'name': Department.query.get(dept.department_id).name,
-                                'pass_percent': dept.pass_percent,
-                                'id': dept.department_id
+            else:
+                exam_details = {'exam_name': exam.name, 'exam_id': exam.id, 'college_name': college.name, 'college_id': college.id}
+                department_ranks = DepartmentRank.query.filter(and_(DepartmentRank.exam_id==exam_id, DepartmentRank.college_id==college_id)).all()
+                for dept in department_ranks:
+                    data.append({ 
+                                        'name': Department.query.get(dept.department_id).name,
+                                        'value': dept.pass_percent,
+                                        'id': dept.department_id
+                                        })
+                table_details = {
+                                'caption': exam.name + " | " + college.name,
+                                'headers': ['Rank', 'Department Name', 'Pass Percentage']
+                }
+                return render_template('index.html', page_depth=2, data=data, exam_details=exam_details, exam_list=exam_list, table_details=table_details)
+        else:
+            exam_details = {'exam_name': exam.name, 'exam_id': exam.id}
+            college_ranks = exam.college_ranks
+            for clg in college_ranks:
+                data.append({ 
+                                'name': College.query.get(clg.college_id).name,
+                                'value': clg.pass_percent,
+                                'id': clg.college_id
                                 })
-        return render_template('college.html', pass_list=pass_list, exam_details=exam_details, exam_list=exam_list)
-                                
-    elif department_id:
-        exam = Exam.query.get(exam_id)
-        college = College.query.get(college_id)
-        department = Department.query.get(department_id);
-        exam_details = {'exam_name': exam.name, 'exam_id': exam.id, 'college_name': college.name, 'college_id': college.id,
-                        'department_name': department.name, 'department_id': department.id}
+            table_details = {
+                                'caption': exam.name,
+                                'headers': ['Rank', 'College Name', 'Pass Percentage']
+                }
+            return render_template('index.html', page_depth=1, data=data, exam_details=exam_details, exam_list=exam_list, table_details=table_details)
 
-        student_ranks = Student.query.filter(and_(Student.exam_id==exam_id,
-                                    Student.college_id==college_id,
-                                    Student.department_id==department_id)).all()
-        sgpa_list = []
-        for student in student_ranks:
-            sgpa_list.append({
-                'register_no': student.register_no,
-                'sgpa': student.sgpa
-            })
-        return render_template('department.html', sgpa_list=sgpa_list, exam_details=exam_details, exam_list=exam_list)
-        
+            
 
-    else:
-        return render_template('index.html', exam_list=exam_list)
-        
 
+      
 
 
 # API Sample Implementation
